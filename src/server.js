@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 
 const db = require('./database')
+const routes = require('./routes')
 
 const app = express()
 
@@ -21,17 +22,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 //abble server to receive form data (post method)
 app.use(express.urlencoded({ extended: true }))
 
-//routes 
-app.get('/', (req, res) => {
-    res.render('index', {
-        title: 'Titulo de teste'
-    })
-})
+
+//defining routes
+app.use('/', routes)
 
 //error not found 404
 app.use((req, res) => {
     res.send('Page not found!')
 })
+
 
 //running server
 const port = process.env.port || 8080
